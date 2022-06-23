@@ -1,5 +1,5 @@
 CC = g++
-FLAGS = -g -Wall
+CFLAGS = -std=c++17 -g -Wall
 INCLUDE_HEADERS = -I headers/
 OBJ_DIR = obj
 OBJS = obj/*.o
