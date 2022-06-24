@@ -12,7 +12,7 @@ all: atm
 
 # this is the last step to create atm.exe
 # this will create object files first in the objs/ directory
-atm: create_directories display.o atm.o
+atm: create_directories display.o atm.o user.o
 	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) $(OBJS) -o $(TARGET)
 
 atm.o:

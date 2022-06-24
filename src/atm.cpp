@@ -38,6 +38,7 @@ int main()
 		std::cout << "Please enter your password: ";
 		std::cin >> password;
 
+
 		if (userRecord[username].getPass() == password){
 			std::cout << "Welcome back " << username << "!" << std::endl;
 			break;

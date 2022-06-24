@@ -14,20 +14,20 @@
 
 class User {
 private:
-	static std::string name;
-	static std::string pass;
-	static int bal;
+	std::string name;
+	std::string pass;
+	int bal;
 
 public:
-	// User();
-	// User(const User &other);
+	User();
+	User(const User &other);
 	User(std::string name, std::string pass, int bal);
-	static std::string getName();
-	static void setName(std::string input);
-	static std::string getPass();
-	static void setPass(std::string input);
-	static float getBal();
-	static void setBal(float amount, int action);
+	std::string getName();
+	void setName(std::string input);
+	std::string getPass();
+	void setPass(std::string input);
+	float getBal();
+	void setBal(float amount, int action);
 };
 
 // User::User(){
@@ -35,15 +35,19 @@ public:
 // 	pass = "";
 // 	bal = 0;
 // }
-// User::User(const User &other){
-// 	name = other.name;
-// 	pass = other.pass;
-// 	bal = other.bal;
-// }
+/*
+
+User::User(const User &other){
+	name = other.name;
+	pass = other.pass;
+	bal = other.bal;
+}
+
 User::User(std::string name, std::string pass, int bal){
 	name=name; 
 	pass=pass; 
 	bal=bal;
 }
+*/
 
 #endif
