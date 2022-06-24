@@ -8,6 +8,7 @@
 #include "display.h"
 
 void Display::menu(const std::string& name) {
+  std::cout << std::endl;
   std::cout << "1. Deposit" << std::endl;
   std::cout << "2. Withdraw" << std::endl;
   std::cout << "3. Check Balance" << std::endl;

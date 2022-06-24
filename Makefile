@@ -21,6 +21,8 @@ atm.o:
 display.o:
 	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/display.cpp -o $(OBJ_DIR)/display.o
 
+user.o:
+	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/user.cpp -o $(OBJ_DIR)/user.o
 # ensure object and target directories are created
 create_directories:
 	mkdir -p $(OBJ_DIR)
