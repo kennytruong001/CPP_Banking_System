@@ -12,14 +12,17 @@ all: atm
 
 # this is the last step to create atm.exe
 # this will create object files first in the objs/ directory
-atm: create_directories display.o atm.o
+atm: atm.o
 	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) $(OBJS) -o $(TARGET)
 
-atm.o:
+atm.o: create_directories user.o display.o
 	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/atm.cpp -o $(OBJ_DIR)/atm.o
 
-display.o:
+display.o: create_directories
 	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/display.cpp -o $(OBJ_DIR)/display.o
+
+user.o: create_directories
+	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/user.cpp -o $(OBJ_DIR)/user.o
 
 # ensure object and target directories are created
 create_directories:
