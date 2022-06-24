@@ -1,31 +1,49 @@
 #include "user.h"
 
+User::User() {
+    name="";
+    pass="";
+    bal=0;
+}
+
+User::User(std::string name, std::string pass, int bal){
+	name=name; 
+	pass=pass; 
+	bal=bal;
+}
+
+User::User(const User &other){
+	name = other.name;
+	pass = other.pass;
+	bal = other.bal;
+}
+
 std::string User::getName(){
-    return User::name;
+    return name;
 }
 
 void User::setName(std::string input){
-    User::name = input;
+    name = input;
 }
 
 std::string User::getPass(){
-    return User::pass;
+    return pass;
 }
 
 void User::setPass(std::string input){
-    User::pass = input;
+    pass = input;
 }
 
 float User::getBal(){
-    return User::bal;
+    return bal;
 }
 
 void User::setBal(float amount, int action){
     if (action == 0){
-        User::bal += amount;
+        bal += amount;
     }
 
     if (action == 1){
-        User::bal -= amount;
+        bal -= amount;
     }
 }
