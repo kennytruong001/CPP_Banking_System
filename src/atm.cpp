@@ -39,7 +39,7 @@ int main()
 		std::cin >> password;
 
 
-		if (userRecord[username].getPass() == password){
+		if (password == userRecord[username].getPass()){
 			std::cout << "Welcome back " << username << "!" << std::endl;
 			break;
 		}
