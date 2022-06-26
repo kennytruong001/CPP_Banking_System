@@ -7,9 +7,15 @@
 // custom libraries
 #include "display.h"
 #include "user.h"
+#include "utils.h"
 
 int main()
 {
+
+	// please remove me after you get it working!
+	std::string saveFileName = Utils::getExecutableDirectory() + "../data/records.txt";
+	std::cout << "records.txt directory is at: " << saveFileName << std::endl;
+
 	int input;
 	//int bal = 0;
 	bool active = true;

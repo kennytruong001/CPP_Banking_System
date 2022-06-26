@@ -1,7 +1,7 @@
 /**
  * @file user.h
  *
- * @brief This is a static function class that displays text prompts for the banking system
+ * @brief This is a user class that keeps track of important details of users
  *
  * @author Richard Duong & Kenny Truong
  */
