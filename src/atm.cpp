@@ -3,6 +3,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <fstream>
 
 // custom libraries
 #include "display.h"
@@ -21,7 +22,7 @@ int main()
 		{"kenny", "pw1"},
 		{"richard", "pw2"}};
 
-	User kenny("kenny", "pw1", 0);
+	User kenny("kenny", "pw1", 1000);
 	User richard("richard", "pw2", 0);
 
 	std::map<std::string, User> userRecord = {
@@ -29,6 +30,16 @@ int main()
 		{"richard", richard}
 	};
 
+	// READ and WRITE file that has user info
+	std::ifstream file;
+	file.open("record.txt");
+	std::string line;
+	if (file.is_open()){
+		while(std::getline(file,line)){
+			std::cout << line << std::endl;
+		}
+	}
+	
 	// loop for login user
 	bool invalid_login = true;
 	while (invalid_login)
@@ -37,7 +48,6 @@ int main()
 		std::cin >> username;
 		std::cout << "Please enter your password: ";
 		std::cin >> password;
-
 
 		if (password == userRecord[username].getPass()){
 			std::cout << "Welcome back " << username << "!" << std::endl;
@@ -91,4 +101,5 @@ int main()
 			std::cin.ignore();
 		}
 	}
+	file.close();
 }

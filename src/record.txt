@@ -1,0 +1,2 @@
+"kenny", "pw1", 1000
+"richard", "pw2", 0

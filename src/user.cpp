@@ -6,11 +6,8 @@ User::User() {
     bal=0;
 }
 
-User::User(std::string name, std::string pass, int bal){
-	name=name; 
-	pass=pass; 
-	bal=bal;
-}
+User::User(std::string name, std::string pass, int bal):name(name), pass(pass), bal(bal){}
+
 
 User::User(const User &other){
 	name = other.name;
