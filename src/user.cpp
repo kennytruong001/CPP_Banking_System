@@ -1,22 +1,24 @@
 #include "user.h"
 
 User::User() {
-    name="";
-    pass="";
+    name="Jane Doe";
+    pass="password";
     bal=0;
 }
 
-User::User(std::string name, std::string pass, int bal){
-	name=name; 
-	pass=pass; 
-	bal=bal;
-}
+User::User(std::string name, std::string pass, int bal):name(name), pass(pass), bal(bal){}
 
 User::User(const User &other){
 	name = other.name;
 	pass = other.pass;
 	bal = other.bal;
 }
+
+// User& User::operator= (const User &user){
+//     name = user.name;
+//     pass = user.pass;
+//     bal = user.bal;
+// }
 
 std::string User::getName(){
     return name;

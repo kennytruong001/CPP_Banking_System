@@ -21,7 +21,7 @@ int main()
 		{"kenny", "pw1"},
 		{"richard", "pw2"}};
 
-	User kenny("kenny", "pw1", 0);
+	User kenny("kenny", "pw1", 1000);
 	User richard("richard", "pw2", 0);
 
 	std::map<std::string, User> userRecord = {
@@ -37,7 +37,6 @@ int main()
 		std::cin >> username;
 		std::cout << "Please enter your password: ";
 		std::cin >> password;
-
 
 		if (password == userRecord[username].getPass()){
 			std::cout << "Welcome back " << username << "!" << std::endl;

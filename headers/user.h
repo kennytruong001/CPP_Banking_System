@@ -30,24 +30,4 @@ public:
 	void setBal(float amount, int action);
 };
 
-// User::User(){
-// 	name = "";
-// 	pass = "";
-// 	bal = 0;
-// }
-/*
-
-User::User(const User &other){
-	name = other.name;
-	pass = other.pass;
-	bal = other.bal;
-}
-
-User::User(std::string name, std::string pass, int bal){
-	name=name; 
-	pass=pass; 
-	bal=bal;
-}
-*/
-
 #endif
