@@ -1,7 +1,12 @@
 #include "utils.h"
 
+// NOTE: this is not working on windows for some reason, i suspect its because we're using mingw and is missing the filesystem lib
 // this function gets the executable directory path in linux/windows systems
 // sourced from: https://stackoverflow.com/questions/50889647/best-way-to-get-exe-folder-path#:~:text=%23include%20%3Cfilesystem,back)slash%0A%7D
+std::string Utils::getExecutableDirectory() {
+    return "not currently working, sorry :P";
+}
+/*
 std::string Utils::getExecutableDirectory() {
     #ifdef _WIN32
         // Windows specific
@@ -17,3 +22,4 @@ std::string Utils::getExecutableDirectory() {
     #endif
         return std::filesystem::path{ szPath }.parent_path() / ""; // to finish the folder path with (back)slash
 }
+*/
