@@ -8,14 +8,6 @@ SRCS = src/*.cpp
 TARGET_DIR = target
 TARGET = target/atm.exe
 
-ifeq ($(OS),Windows_NT)     # is Windows_NT on XP, 2000, 7, Vista, 10...
-	CREATE_DIRECTORIES := mkdir
-	CLEAN := rmdir /Q/S
-else
-	CREATE_DIRECTORIES := mkdir -p
-	CLEAN := rm -rf	
-endif
-
 all: atm
 
 # this is the last step to create atm.exe
@@ -35,12 +27,11 @@ display.o:
 utils.o:
 	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/utils.cpp -o $(OBJ_DIR)/utils.o
 
-
 # ensure object and target directories are created
-create_directories: clean
-	$(CREATE_DIRECTORIES) $(OBJ_DIR) $(TARGET_DIR)
+create_directories:
+	mkdir -p $(OBJ_DIR)
+	mkdir -p $(TARGET_DIR)
 
 # remove all objects and target executables
 clean:
-	$(CLEAN) $(OBJ_DIR) $(TARGET_DIR)
-
+	rm -fr $(OBJ_DIR) $(TARGET_DIR)
