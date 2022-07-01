@@ -3,23 +3,28 @@
 #include <string>
 #include <set>
 #include <map>
+#include <fstream>
+#include <vector>
 
 // custom libraries
 #include "display.h"
 #include "user.h"
-#include "utils.h"
 
 int main()
 {
-
-	// please remove me after you get it working!
-	std::string saveFileName = Utils::getExecutableDirectory() + "../data/records.txt";
-	std::cout << "records.txt directory is at: " << saveFileName << std::endl;
-
+	// // please remove me after you get it working!
+	// std::string saveFileName = Utils::getExecutableDirectory() + "../data/records.txt";
+	// std::cout << "records.txt directory is at: " << saveFileName << std::endl;
+	std::cout<<"HELLO WORLD"<<std::endl;
+	
 	int input;
 	//int bal = 0;
 	bool active = true;
 	int diff;
+	std::vector<std::string> userRecord_arr;
+	size_t pos = 0;
+	std::string token;
+	std::string delimiter = ",";
 
 	std::string username = "";
 	std::string password = "";
@@ -35,6 +40,23 @@ int main()
 		{"richard", richard}
 	};
 
+	// READ and WRITE file that has user info
+	std::fstream file;
+	file.open("data/record.txt", std::ios::in);
+	std::string line;
+	if (file.is_open()){
+		while(std::getline(file,line)){
+			//std::cout << line << std::endl;
+			userRecord_arr.push_back(line);
+			while ((pos = line.find(delimiter)) != std::string::npos) {
+    			token = line.substr(0, pos);
+    			std::cout << token << std::endl;
+    			line.erase(0, pos + delimiter.length());
+			}
+		}
+	}
+
+	std::cout<<line<<std::endl;
 	// loop for login user
 	bool invalid_login = true;
 	while (invalid_login)
@@ -96,4 +118,5 @@ int main()
 			std::cin.ignore();
 		}
 	}
+	file.close();
 }

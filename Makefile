@@ -7,6 +7,7 @@ SRC_DIR = src
 SRCS = src/*.cpp
 TARGET_DIR = target
 TARGET = target/atm.exe
+DATA_DIR = data
 
 all: atm
 
@@ -31,6 +32,7 @@ utils.o:
 create_directories:
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(TARGET_DIR)
+	mkdir -p $(DATA_DIR)
 
 # remove all objects and target executables
 clean:
