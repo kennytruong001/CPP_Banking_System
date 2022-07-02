@@ -1,25 +1,20 @@
 #include "utils.h"
+#include <iostream>
 
-// NOTE: this is not working on windows for some reason, i suspect its because we're using mingw and is missing the filesystem lib
-// this function gets the executable directory path in linux/windows systems
-// sourced from: https://stackoverflow.com/questions/50889647/best-way-to-get-exe-folder-path#:~:text=%23include%20%3Cfilesystem,back)slash%0A%7D
-std::string Utils::getExecutableDirectory() {
-    return "not currently working, sorry :P";
+// Sourced from: https://stackoverflow.com/questions/36685847/c-get-full-path-to-file-in-directory
+std::string Utils::getCanonicalPath(const std::string path) {
+    char source[MAX_PATH];
+    char result[MAX_PATH];
+    strcpy(source, path.c_str());
+    PathCanonicalize(result, source); 
+    // GetFullPathName(path.c_str(), MAX_PATH, fullFilename, nullptr);
+    return std::string(result);
 }
-/*
+
+// Sourced from: https://gist.github.com/karolisjan/f9b8ac3ae2d41ec0ce70f2feac6bdfaf
 std::string Utils::getExecutableDirectory() {
-    #ifdef _WIN32
-        // Windows specific
-        wchar_t szPath[Utils::MAX_PATH];
-        GetModuleFileNameW( NULL, szPath, Utils::MAX_PATH );
-    #else
-        // Linux specific
-        char szPath[Utils::MAX_PATH];
-        ssize_t count = readlink( "/proc/self/exe", szPath, Utils::MAX_PATH );
-        if( count < 0 || count >= Utils::MAX_PATH )
-            return {}; // some error
-        szPath[count] = '\0';
-    #endif
-        return std::filesystem::path{ szPath }.parent_path() / ""; // to finish the folder path with (back)slash
+    char buffer[MAX_PATH];
+	GetModuleFileNameA(NULL, buffer, MAX_PATH);
+	std::string::size_type pos = std::string(buffer).find_last_of("\\/");	
+	return std::string(buffer).substr(0, pos) + "\\";
 }
-*/
