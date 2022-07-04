@@ -13,8 +13,9 @@ int main()
 {
 
 	// please remove me after you get it working!
-	std::string saveFileName = Utils::getExecutableDirectory() + "../data/records.txt";
-	std::cout << "records.txt directory is at: " << saveFileName << std::endl;
+	std::string saveFileName = Utils::getExecutableDirectory() + "..\\data\\records.txt";
+	std::cout << "records.txt path is: " << saveFileName << std::endl;
+	std::cout << "canonical records.txt path is at: " << Utils::getCanonicalPath(saveFileName) << std:: endl;
 
 	int input;
 	//int bal = 0;
