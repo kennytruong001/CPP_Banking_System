@@ -13,7 +13,7 @@ all: atm
 
 # this is the last step to create atm.exe
 # this will create object files first in the objs/ directory
-atm: create_directories utils.o display.o user.o atm.o
+atm: create_directories utils.o display.o user.o atm.o sha256.o
 	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) $(OBJS) -o $(TARGET)
 
 atm.o:
@@ -27,6 +27,9 @@ display.o:
 
 utils.o:
 	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/utils.cpp -o $(OBJ_DIR)/utils.o
+
+sha256.o:
+	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/sha256.cpp -o $(OBJ_DIR)/sha256.o
 
 # ensure object and target directories are created
 create_directories:
