@@ -8,13 +8,12 @@ SRC_DIR = src
 SRCS = src/*.cpp
 TARGET_DIR = target
 TARGET = target/atm.exe
+DATA_DIR = data
 
 all: atm
 
-# this is the last step to create atm.exe
-# this will create object files first in the objs/ directory
 # NOTE TO SELF: Linker is safest when you put at end of command to help resolve issues, here we need at end of atm.cpp
-atm: create_directories utils.o display.o user.o atm.o
+atm: create_directories utils.o display.o user.o atm.o sha256.o
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $(TARGET) $(LINKER)
 
 atm.o:
@@ -29,10 +28,14 @@ display.o:
 utils.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC_DIR)/utils.cpp -o $(OBJ_DIR)/utils.o $(LINKER)
 
+sha256.o:
+	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/sha256.cpp -o $(OBJ_DIR)/sha256.o
+
 # ensure object and target directories are created
 create_directories:
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(TARGET_DIR)
+	mkdir -p $(DATA_DIR)
 
 # remove all objects and target executables
 clean:
