@@ -12,12 +12,12 @@
 
 // standard imports
 #include <string>
+#include <windows.h>
+#include <shlwapi.h>
 
 class Utils {
-private:
-    static const unsigned MAX_PATH = 260;
-
 public:
+    static std::string getCanonicalPath(const std::string path);
     static std::string getExecutableDirectory();
 };
 
