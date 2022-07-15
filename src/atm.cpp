@@ -10,7 +10,7 @@
 #include "display.h"
 #include "user.h"
 #include "sha256.h"
-# include "utils.h"
+#include "utils.h"
 
 int main()
 {
@@ -45,6 +45,7 @@ int main()
 	int user_count = 0;
 	std::string name = "";
 	std::string pass = "";
+	std::string pass_check = "";
 	int bal = 0; 
 	if (file.is_open()){
 		while(std::getline(file,line)){
@@ -88,17 +89,46 @@ int main()
 	bool invalid_login = true;
 	while (invalid_login)
 	{
-		std::cout << "Please enter your username: ";
-		std::cin >> username;
-		std::cout << "Please enter your password: ";
-		std::cin >> password;
+		Display::main();
+		std::cin>>input;
+		if (input == 1){
+			std::cout << "Please enter your username: ";
+			std::cin >> username;
+			std::cout << "Please enter your password: ";
+			std::cin >> password;
 
-		if (sha256(password) == userRecord[username].getPass()){
-			std::cout << "Welcome back " << username << "!" << std::endl;
-			break;
+			if (sha256(password) == userRecord[username].getPass()){
+				std::cout << "Welcome back " << username << "!" << std::endl;
+				break;
+			}
+
+			std::cout << "Sorry, incorrect username or password! Please try again" << std::endl;
 		}
 
-		std::cout << "Sorry, incorrect username or password! Please try again" << std::endl;
+		//Create a user
+		if (input == 2) {
+			std::cout<<"What username would you like? " <<std::endl;
+			std::cin>>username;
+			std::cout<<"What password would you like? " <<std::endl;
+			std::cin>>pass;
+			std::cout<< "Retype the password" <<std::endl;
+			std::cin>>pass_check;
+
+			if (pass.compare(pass_check) == 0) {
+				userRecord.insert(std::pair<std::string, User>(username, User(username,sha256(pass), 0)));
+				system("clear");
+				file.open("record.txt", std::ios::app);
+				if (file.is_open()) {
+					file << "" <<std::endl;
+					file << username << "," << sha256(pass) << ",0," <<std::endl;
+				}
+				std::cout << "Welcome " << username << "!" << std::endl;
+				break;
+			}
+			else{
+				std::cout<<"Password did not match, please try again"<<std::endl;
+			}
+		}
 	}
 
 	while (active)
