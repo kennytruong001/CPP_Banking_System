@@ -116,14 +116,18 @@ int main()
 
 			if (pass.compare(pass_check) == 0) {
 				userRecord.insert(std::pair<std::string, User>(username, User(username,sha256(pass), 0)));
+				std::fstream myfile;
 				system("clear");
-				file.open("record.txt", std::ios::app);
-				if (file.is_open()) {
-					file << "" <<std::endl;
-					file << username << "," << sha256(pass) << ",0," <<std::endl;
+				myfile.open("data/record.txt", std::ios::app);
+				if (myfile.is_open()) {
+					myfile << "" <<std::endl;
+					myfile << username << "," << sha256(pass) << ",0," <<std::endl;
 				}
 				std::cout << "Welcome " << username << "!" << std::endl;
 				break;
+				//Needs to check if user is already created
+				//makes more room in userRecord if # of users > 5
+
 			}
 			else{
 				std::cout<<"Password did not match, please try again"<<std::endl;
