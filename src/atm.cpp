@@ -10,6 +10,7 @@
 #include "display.h"
 #include "user.h"
 #include "sha256.h"
+# include "utils.h"
 
 int main()
 {
