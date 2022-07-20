@@ -3,3 +3,4 @@
 *.out
 data/
 .vscode/
+examples/testing_libcurl/lib/curl-7.84.0_5-win64-mingw
