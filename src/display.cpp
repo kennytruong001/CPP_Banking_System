@@ -15,3 +15,13 @@ void Display::menu(const std::string& name) {
   std::cout << "4. Exit" << std::endl;
   std::cout << name << ", choose an option above: "; 
 }
+
+void Display::main() {
+  std::cout<<"----------------------------------------- "<<std::endl;
+  std::cout<<" W E L C O M E   T O   R D K T   B A N K " <<std::endl;
+  std::cout<<"----------------------------------------- "<<std::endl;
+  std::cout<<""<<std::endl;
+  std::cout<<"What would you like to do today?"<<std::endl;
+  std::cout<<"1. Log in"<<std::endl;
+  std::cout<<"2. Create new user"<<std::endl;
+}
