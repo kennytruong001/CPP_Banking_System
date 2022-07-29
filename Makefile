@@ -13,7 +13,7 @@ DATA_DIR = data
 all: atm
 
 # NOTE TO SELF: Linker is safest when you put at end of command to help resolve issues, here we need at end of atm.cpp
-atm: create_directories utils.o display.o user.o atm.o sha256.o
+atm: create_directories display.o user.o atm.o sha256.o
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $(TARGET) $(LINKER)
 
 atm.o:

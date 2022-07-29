@@ -7,7 +7,7 @@ std::string Utils::getCanonicalPath(const std::string path) {
     char result[MAX_PATH];
     strcpy(source, path.c_str());
     PathCanonicalize(result, source); 
-    // GetFullPathName(path.c_str(), MAX_PATH, fullFilename, nullptr);
+    //GetFullPathName(path.c_str(), MAX_PATH, fullFilename, nullptr);
     return std::string(result);
 }
 

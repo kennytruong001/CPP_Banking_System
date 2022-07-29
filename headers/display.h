@@ -18,6 +18,7 @@ class Display {
 public:
   static void menu(const std::string& name);
   static void main();
+  static void accountMenu();
 };
 
 
