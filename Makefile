@@ -29,7 +29,7 @@ utils.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC_DIR)/utils.cpp -o $(OBJ_DIR)/utils.o $(LINKER)
 
 sha256.o:
-	$(CC) $(CFLAGS) $(INCLUDE_HEADERS) -c $(SRC_DIR)/sha256.cpp -o $(OBJ_DIR)/sha256.o
+	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC_DIR)/sha256.cpp -o $(OBJ_DIR)/sha256.o $(LINKER)
 
 # ensure object and target directories are created
 create_directories:
