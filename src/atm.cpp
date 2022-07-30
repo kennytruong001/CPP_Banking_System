@@ -37,14 +37,25 @@ int main()
 	std::string username = "";
 	std::string password = "";
 
+	/*
 	std::map<std::string,User> userRecord = {};
 	std::map<std::string,Customer> customerRecord = {};
 	std::map<std::string,Manager> managerRecord = {};
+	*/
+	// Instead of making a separate map for every person, we should use 1 for all our users, and lets keep it as a pointer
+	std::map<std::string, User*> userRecords;
+
+	
+
 
 	// READ file that has user info and stores it in a UserRecord hashmap
 	std::fstream file;
-	std::vector<Customer*> customerList;
-	std::vector<Manager*> managerList;
+
+	// Let's change this to be a generic User* vector to make use of our abstract class
+	std::vector<User*> userList;
+	//std::vector<Customer*> customerList;
+	//std::vector<Manager*> managerList;
+
 	file.open("data/record.txt", std::ios::in);
 	std::string line;
 	int part_count = 0;
@@ -64,6 +75,7 @@ int main()
 	float amount = 0.0;
 	std::map<std::string,float> accounts = {};
 	//int bal = 0;
+
 
 	if (file.is_open()){
 		while(std::getline(file,line)){
@@ -105,11 +117,13 @@ int main()
 							accounts.insert(std::pair<std::string, float>(accountName, accountBal));
 						}
 						
-						customerList.push_back(new Customer(name, pass, email, phone_number, accounts));
+						// here we can push back a new Customer because of our use of abstract classes (base class user)
+						userList.push_back(new Customer(name, pass, email, phone_number, accounts));
 					}
 					else if (type == "M"){
 						branch = token;
-						managerList.push_back(new Manager(name, pass, email, phone_number, branch));
+						// same here, we can push back a new Manager to our user list because of abstract classes
+						userList.push_back(new Manager(name, pass, email, phone_number, branch));
 					}
 				}
 				part_count += 1;
@@ -127,12 +141,20 @@ int main()
 	// for (int i = 0; i<5;i++){
 	// 	userRecord.insert(std::pair<std::string, User>(userInstance[i].getName(), userInstance[i]) );
 	// }
+
+	for (int i = 0; i < userList.size(); ++i) {
+		std::string name = userList[i]->getName();
+		userRecords[name] = userList[i];
+	}
+
+	/*
 	for (int i=0; i < signed(customerList.size()); i++){
 		customerRecord.insert(std::pair<std::string,Customer>(customerList[i]->getName(), *(customerList)[i]));
 	}
 	for (int i=0; i < signed(managerList.size()); i++){
 		managerRecord.insert(std::pair<std::string,Manager>(managerList[i]->getName(), *(managerList)[i]));
 	}
+	*/
 	std::cout<<managerRecord["kenny"].getName()<<std::endl;
 	// char word[] = "pw1";
 	// std::string sha256_pass = SHA256(word);
@@ -246,7 +268,7 @@ int main()
 			customerRecord[username].setAccountsBal(accountName, diff, 0);
 			break;
 		case 2:
-		std::cout << "What account would you like to withdraw from?: ";
+			std::cout << "What account would you like to withdraw from?: ";
 			std::cin >> accountName;
 			std::cout << "How much would you like to withdraw?: ";
 			std::cin >> diff;

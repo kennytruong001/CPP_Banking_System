@@ -39,9 +39,7 @@ protected:
 public:
 	Customer();
 	Customer(const Customer &other);
-	Customer(std::string name, std::string pass, std::string email, std::string phone_number, std::map<std::string,float> accounts):User(name, pass, email, phone_number){
-		accounts = accounts;
-	};
+	Customer(std::string name, std::string pass, std::string email, std::string phone_number, std::map<std::string,float> accounts);
 	void setName(std::string input);
 	void setPass(std::string input);
 	std::map<std::string,float> getAccounts();
