@@ -9,6 +9,8 @@
 // custom libraries
 #include "display.h"
 #include "user.h"
+#include "customer.h"
+#include "manager.h"
 #include "sha256.h"
 #include "utils.h"
 
@@ -37,14 +39,11 @@ int main()
 	std::string username = "";
 	std::string password = "";
 
-	std::map<std::string,User> userRecord = {};
-	std::map<std::string,Customer> customerRecord = {};
-	std::map<std::string,Manager> managerRecord = {};
+	static std::map<std::string,User*> userRecord = {};
 
 	// READ file that has user info and stores it in a UserRecord hashmap
 	std::fstream file;
-	std::vector<Customer*> customerList;
-	std::vector<Manager*> managerList;
+	std::vector<User*> userList;
 	file.open("data/record.txt", std::ios::in);
 	std::string line;
 	int part_count = 0;
@@ -67,9 +66,7 @@ int main()
 
 	if (file.is_open()){
 		while(std::getline(file,line)){
-
-			userRecord_arr.push_back(line);
-
+			//userRecord_arr.push_back(line);
 			while ((pos = line.find(delimiter)) != std::string::npos) {
     			token = line.substr(0, pos);
 				if (part_count % 6 == 0){
@@ -105,11 +102,11 @@ int main()
 							accounts.insert(std::pair<std::string, float>(accountName, accountBal));
 						}
 						
-						customerList.push_back(new Customer(name, pass, email, phone_number, accounts));
+						userList.push_back(new Customer(name, pass, email, phone_number, accounts));
 					}
 					else if (type == "M"){
 						branch = token;
-						managerList.push_back(new Manager(name, pass, email, phone_number, branch));
+						userList.push_back(new Manager(name, pass, email, phone_number, branch));
 					}
 				}
 				part_count += 1;
@@ -124,16 +121,21 @@ int main()
 		}
 	}
 
+	for (int i=0; i < userList.size(); i++){
+		std::string name = userList[i]->getName();
+		//userRecord[name] = userList[i];
+		userRecord.insert(std::pair<std::string, User*>(name, userList[i]));
+		std::cout<<"PRINT" << userRecord["richard"]->getPass() << std::endl;
+	}
 	// for (int i = 0; i<5;i++){
 	// 	userRecord.insert(std::pair<std::string, User>(userInstance[i].getName(), userInstance[i]) );
 	// }
-	for (int i=0; i < signed(customerList.size()); i++){
-		customerRecord.insert(std::pair<std::string,Customer>(customerList[i]->getName(), *(customerList)[i]));
-	}
-	for (int i=0; i < signed(managerList.size()); i++){
-		managerRecord.insert(std::pair<std::string,Manager>(managerList[i]->getName(), *(managerList)[i]));
-	}
-	std::cout<<managerRecord["kenny"].getName()<<std::endl;
+	// for (int i=0; i < signed(customerList.size()); i++){
+	// 	customerRecord.insert(std::pair<std::string,Customer>(customerList[i]->getName(), *(customerList)[i]));
+	// }
+	// for (int i=0; i < signed(managerList.size()); i++){
+	// 	managerRecord.insert(std::pair<std::string,Manager>(managerList[i]->getName(), *(managerList)[i]));
+	// }
 	// char word[] = "pw1";
 	// std::string sha256_pass = SHA256(word);
 	// std::cout<<"pw1: "<< sha256_pass << std::endl;
@@ -152,17 +154,15 @@ int main()
 			std::cin >> username;
 			std::cout << "Please enter your password: ";
 			std::cin >> password;
-
-			if (sha256(password) == customerRecord[username].getPass()){
+			std::cout<<"GETS HERE AND SEE " << std::endl;
+			if (sha256(password) == userRecord[username]->getPass()){
 				std::cout << "Welcome back " << username << "!" << std::endl;
 				break;
 			}
-
-			else if (sha256(password) == managerRecord[username].getPass()){
-				std::cout << "Welcome back " << username << "!" << std::endl;
-				break;
+			else{
+				std::cout << "Sorry, incorrect username or password! Please try again" << std::endl;
 			}
-			std::cout << "Sorry, incorrect username or password! Please try again" << std::endl;
+			
 		}
 
 		//Create a user
@@ -204,53 +204,24 @@ int main()
 	}
 
 	while (active) {
-		Display::menu(userRecord[username].getName());
+		Display::menu(userRecord[username]->getName());
 		std::cin >> input;
 		system("clear");
-		// if (input == 1)
-		// {
-		// 	std::cout << "How much would you like to deposit?: ";
-		// 	std::cin >> diff;
-		// 	userRecord[username].setBal(diff, 0);
-		// }
-		// else if (input == 2)
-		// {
-		// 	std::cout << "How much would you like to withdraw?: ";
-		// 	std::cin >> diff;
-		// 	userRecord[username].setBal(diff, 1);
-		// }
-
-		// else if (input == 3)
-		// {
-		// 	std::cout << "Current balance: " << userRecord[username].getBal() << std::endl;
-		// }
-
-		// else if (input == 4)
-		// {
-		// 	std::cout << "Thank you, have a nice day!" << std::endl;
-		// 	active = false;
-		// }
-
-		// else
-		// {
-		// 	std::cout << "Invalid input, try again" << std::endl;
-		// 	std::cin.clear();
-		// 	std::cin.ignore();
-		// }
+		Customer* customer = static_cast<Customer*>(userRecord[username]);
 		switch(input) {
 		case 1:
 			std::cout << "What account would you like to deposit to?: ";
 			std::cin >> accountName;
 			std::cout << "How much would you like to deposit?: ";
 			std::cin >> diff;
-			customerRecord[username].setAccountsBal(accountName, diff, 0);
+			customer->deposit(accountName, diff);
 			break;
 		case 2:
 		std::cout << "What account would you like to withdraw from?: ";
 			std::cin >> accountName;
 			std::cout << "How much would you like to withdraw?: ";
 			std::cin >> diff;
-			customerRecord[username].setAccountsBal(accountName, diff, 1);
+			customer->withdraw(accountName, diff);
 			break;
 		case 3:
 			std::cout << "What account would you like to transfer money FROM: ";
@@ -259,7 +230,7 @@ int main()
 			std::cin >> accountNameTo;
 			std::cout << "How much would you want to transfer: ";
 			std::cin >> amount;
-			customerRecord[username].transfer(accountNameFrom, accountNameTo, amount);
+			customer->transfer(accountNameFrom, accountNameTo, amount);
 		case 4:
 			//std::cout << "Here are your accounts: " << customerRecord[username].getAccounts() << std::endl;
 			std::cout<<"BALANCE"<<std::endl;
