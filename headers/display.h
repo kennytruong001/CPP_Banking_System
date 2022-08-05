@@ -16,7 +16,8 @@
 
 class Display {
 public:
-  static void menu(const std::string& name);
+  static void customerMenu(const std::string& name);
+  static void managerMenu(const std::string& name);
   static void main();
   static void accountMenu();
 };

@@ -3,6 +3,7 @@
 //MANAGER CLASS
 Manager::Manager():
     User::User(
+        "M",
         "Jane Doe",
         "password",
         "user@domain.com",
@@ -10,8 +11,9 @@ Manager::Manager():
     branch(){}
 
 
-Manager::Manager(const std::string name, const std::string pass, const std::string email, const std::string phone_number, const std::string branch):
+Manager::Manager(const std::string type, const std::string name, const std::string pass, const std::string email, const std::string phone_number, const std::string branch):
     User::User(
+        type,
         name, 
         pass, 
         email, 
@@ -20,6 +22,7 @@ Manager::Manager(const std::string name, const std::string pass, const std::stri
 
 Manager::Manager(const Manager &other):
     User::User(
+        type,
         name,
         pass,
         email,

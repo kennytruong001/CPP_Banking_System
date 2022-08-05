@@ -14,7 +14,7 @@ private:
 public:
 	Manager();
 	Manager(const Manager &other);
-	Manager(const std::string name, const std::string pass, const std::string email, const std::string phone_number, const std::string branch);
+	Manager(const std::string type, const std::string name, const std::string pass, const std::string email, const std::string phone_number, const std::string branch);
 	void createUser(const std::string name);
 	void deleteUser(const std::string name);
 	std::string getBranch();

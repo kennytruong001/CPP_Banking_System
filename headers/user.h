@@ -15,6 +15,7 @@
 
 class User {
 protected:
+	std::string type;
 	std::string name;
 	std::string pass;
 	std::string email;
@@ -23,10 +24,11 @@ protected:
 public:
 	User();
 	User(const User &other);
-	User(const std::string name, const std::string pass, const std::string email, const std::string phone_number);
+	User(const std::string type, const std::string name, const std::string pass, const std::string email, const std::string phone_number);
 	std::string getName();
 	//void setName(std::string input);
 	std::string getPass();
+	std::string getType();
 	//void setPass(std::string input);
 	//float getBal();
 	//void setBal(float amount, int action);
