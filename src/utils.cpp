@@ -18,3 +18,7 @@ std::string Utils::getExecutableDirectory() {
 	std::string::size_type pos = std::string(buffer).find_last_of("\\/");	
 	return std::string(buffer).substr(0, pos) + "\\";
 }
+
+// void Utils::Parse(std::string stringParse, std::string delimiter) {
+
+// }

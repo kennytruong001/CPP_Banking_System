@@ -13,7 +13,7 @@ DATA_DIR = data
 all: atm
 
 # NOTE TO SELF: Linker is safest when you put at end of command to help resolve issues, here we need at end of atm.cpp
-atm: create_directories display.o user.o atm.o sha256.o
+atm: create_directories display.o user.o customer.o manager.o atm.o sha256.o 
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) -o $(TARGET) $(LINKER)
 
 atm.o:
@@ -21,6 +21,12 @@ atm.o:
 
 user.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC_DIR)/user.cpp -o $(OBJ_DIR)/user.o $(LINKER)
+
+customer.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC_DIR)/customer.cpp -o $(OBJ_DIR)/customer.o $(LINKER)
+
+manager.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC_DIR)/manager.cpp -o $(OBJ_DIR)/manager.o $(LINKER)
 
 display.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC_DIR)/display.cpp -o $(OBJ_DIR)/display.o $(LINKER)
@@ -30,6 +36,8 @@ utils.o:
 
 sha256.o:
 	$(CC) $(CFLAGS) $(INCLUDES) -c $(SRC_DIR)/sha256.cpp -o $(OBJ_DIR)/sha256.o $(LINKER)
+
+
 
 # ensure object and target directories are created
 create_directories:
