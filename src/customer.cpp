@@ -3,14 +3,14 @@
 //CUSTOMER CLASS
 Customer::Customer():
     User::User(
-        "C",
+        Type::CUSTOMER,
         "Jane Doe", 
         "password",
         "user@domain.com",
         "##########"),
         accounts(){}
 
-Customer::Customer(const std::string type, const std::string name, const std::string pass, const std::string email, const std::string phone_number, std::map<std::string, float> accounts):
+Customer::Customer(const Type type, const std::string name, const std::string pass, const std::string email, const std::string phone_number, std::map<std::string, float> accounts):
     User::User(
         type,
         name, 
@@ -28,6 +28,25 @@ Customer::Customer(const Customer &other):
         other.phone_number),
     accounts(other.accounts){}
 
+Customer* Customer::buildCustomerFromUserInfo(std::string userInfo){
+    std::stringstream ss(userInfo);
+    std::string name;
+    std::string pass;
+    std::string email;
+    std::string phone_number;
+    std::map<std::string,float> accounts;
+
+    //parse
+    ss >> name >> pass >> email >> phone_number;
+    while (ss.rdbuf()->in_avail() != 0) {
+        std::string accountName, bal;
+        //float bal;
+        ss >> accountName >> bal;
+        accounts.insert(std::pair<std::string, float>(accountName, stof(bal)));
+    }
+    return new Customer(Type::CUSTOMER, name, pass, email, phone_number, accounts);
+}
+
 void Customer::setName(const std::string input){
     name = input;
 }
@@ -39,7 +58,7 @@ void Customer::setPass(const std::string input){
 void Customer::getAccounts(){
     std::cout << "Here is the balance of your accounts" << std::endl;
     for (std::map<std::string, float>::iterator it = accounts.begin(); it != accounts.end(); ++it){
-        std::cout << it->first << ": " << std::to_string(it->second) << std::endl;
+        std::cout << it->first << ":" << std::to_string(it->second) << ";";
     }
 }
 
@@ -70,4 +89,8 @@ void Customer::transfer(const std::string accountFrom, const std::string account
         std::cout << "You transfered $" << std::to_string(amount) << " from " << accountFrom <<" to " << accountTo << "!" << std::endl;
     }
     
+}
+
+std::map<std::string,float> Customer::getOnlyAccount(){
+    return accounts;
 }

@@ -14,7 +14,7 @@
 #include "customer.h"
 #include "manager.h"
 #include "sha256.h"
-#include "utils.h"
+#include "../headers/utils.h"
 
 int main()
 {
@@ -34,7 +34,7 @@ int main()
 	std::string type;
 	std::string account;
 	std::string accountName;
-	float accountBal;
+	//float accountBal;
 	std::string delimiter = "|";
 
 	std::string username = "";
@@ -45,11 +45,11 @@ int main()
 
 	// READ file that has user info and stores it in a UserRecord hashmap
 	std::fstream file;
-	
+
 	file.open("data/record.txt", std::ios::in);
 	std::string line;
-	int part_count = 0;
-	int bal_part = 0;
+	//int part_count = 0;
+	//int bal_part = 0;
 	std::string name = "";
 	std::string pass = "";
 	std::string email = "";
@@ -62,110 +62,128 @@ int main()
 	float amount = 0.0;
 	std::map<std::string,float> accounts = {};
 
-	if (file.is_open()){
-		while(std::getline(file,line)){
-			std::stringstream ss(line);
-			while (ss.good()){
-				std::string substr;
-				getline(ss, substr, '|');
-				userRecord_arr.push_back(substr);
-			}
-		}
-	}
+	// if (file.is_open()){
+	// 	while(std::getline(file,line)){
+	// 		std::stringstream ss(line);
+	// 		while (ss.good()){
+	// 			std::string substr;
+	// 			getline(ss, substr, '|');
+	// 			userRecord_arr.push_back(substr);
+	// 		}
+	// 	}
+	// }
 
-	for (int i = 0; i < signed(userRecord_arr.size()); i+=2){
-		if (userRecord_arr[i] =="C"){
-			type = "C";
-			std::stringstream str_line(userRecord_arr[i+1]);
+	// for (int i = 0; i < signed(userRecord_arr.size()); i+=2){
+	// 	if (userRecord_arr[i] =="C"){
+	// 		type = "C";
+	// 		std::stringstream str_line(userRecord_arr[i+1]);
 
-			//USER INFO: NAME, PASSWORD, EMAIL, PHONE_NUMBER, ACCOUNTS
-			while (str_line.good()){
-				std::string substr;
-				getline(str_line, substr, ',');
-				if (part_count % 5 == 0){
-					name = substr;
-					//std::cout << "NAME: " << name << std::endl;
-				}
-				else if (part_count % 5 == 1){
-					pass = substr;
-					//std::cout << "PASS: " << pass << std::endl;
-				}
-				else if (part_count % 5 == 2){
-					email = substr;
-					//std::cout << "EMAIL: " << email << std::endl;
-				}
-				else if (part_count % 5 == 3){
-					phone_number = substr;
-					//std::cout << "PHONE NUMBER: " << phone_number << std::endl;
-				}
-				else if (part_count % 5 == 4){
-					accountsString = substr;
+	// 		//USER INFO: NAME, PASSWORD, EMAIL, PHONE_NUMBER, ACCOUNTS
+	// 		while (str_line.good()){
+	// 			std::string substr;
+	// 			getline(str_line, substr, ',');
+	// 			if (part_count % 5 == 0){
+	// 				name = substr;
+	// 				//std::cout << "NAME: " << name << std::endl;
+	// 			}
+	// 			else if (part_count % 5 == 1){
+	// 				pass = substr;
+	// 				//std::cout << "PASS: " << pass << std::endl;
+	// 			}
+	// 			else if (part_count % 5 == 2){
+	// 				email = substr;
+	// 				//std::cout << "EMAIL: " << email << std::endl;
+	// 			}
+	// 			else if (part_count % 5 == 3){
+	// 				phone_number = substr;
+	// 				//std::cout << "PHONE NUMBER: " << phone_number << std::endl;
+	// 			}
+	// 			else if (part_count % 5 == 4){
+	// 				accountsString = substr;
 
-					std::stringstream account_line(accountsString);
-					std::cout << "ACCOUNT>>" << accountsString <<std::endl;
-					//STRING OF ACCOUNTS
-					while (account_line.good()){
-						std::string account_substr;
-						getline(account_line, account_substr, ';');
+	// 				std::stringstream account_line(accountsString);
+	// 				std::cout << "ACCOUNT>>" << accountsString <<std::endl;
+	// 				//STRING OF ACCOUNTS
+	// 				while (account_line.good()){
+	// 					std::string account_substr;
+	// 					getline(account_line, account_substr, ';');
 			
-						//ACCOUNT NAME : BALANCE
-						std::stringstream bal_line(account_substr);
-						while (bal_line.good()){
-							std::string bal_substr;
-							getline(bal_line, bal_substr, ':');
-							std::cout << "BAL_PART" << std::to_string(bal_part) << "---" << bal_substr << "---" << account_substr<<std::endl;
-							if (bal_part % 2 == 0){
-								accountName = bal_substr;
-								//std::cout << "ACCOUNT NAME: " << accountName << std::endl;
-							}
-							if (bal_part % 2 == 1){
-								accountBal = stof(bal_substr);
-								//std::cout << "BALANCE: " << bal_substr << std::endl;
-							}
-							accounts.insert(std::pair<std::string,float>(accountName, accountBal));
-							bal_part++;
-						}
-					}
-				}
-				part_count++;
-			}
-			userList.push_back(new Customer(type, name, pass, email, phone_number, accounts));
-		}
-		else if (userRecord_arr[i] == "M"){
-			type = "M";
-			std::stringstream str_line(userRecord_arr[i+1]);
+	// 					//ACCOUNT NAME : BALANCE
+	// 					std::stringstream bal_line(account_substr);
+	// 					while (bal_line.good()){
+	// 						std::string bal_substr;
+	// 						getline(bal_line, bal_substr, ':');
+	// 						std::cout << "BAL_PART" << std::to_string(bal_part) << "---" << bal_substr << "---" << account_substr<<std::endl;
+	// 						if (bal_part % 2 == 0){
+	// 							accountName = bal_substr;
+	// 							//std::cout << "ACCOUNT NAME: " << accountName << std::endl;
+	// 						}
+	// 						if (bal_part % 2 == 1){
+	// 							accountBal = stof(bal_substr);
+	// 							//std::cout << "BALANCE: " << bal_substr << std::endl;
+	// 						}
+	// 						accounts.insert(std::pair<std::string,float>(accountName, accountBal));
+	// 						bal_part++;
+	// 					}
+	// 				}
+	// 			}
+	// 			part_count++;
+	// 		}
+	// 		userList.push_back(new Customer(type, name, pass, email, phone_number, accounts));
+	// 	}
+	// 	else if (userRecord_arr[i] == "M"){
+	// 		type = "M";
+	// 		std::stringstream str_line(userRecord_arr[i+1]);
 
-			//USER INFO: NAME, PASSWORD, EMAIL, PHONE_NUMBER, ACCOUNTS
-			while (str_line.good()){
-				std::string substr;
-				getline(str_line, substr, ',');
-				if (part_count % 5 == 0){
-					name = substr;
-				}
-				else if (part_count % 5 == 1){
-					pass = substr;
-				}
-				else if (part_count % 5 == 2){
-					email = substr;
-				}
-				else if (part_count % 5 == 3){
-					phone_number = substr;
-				}
-				else if (part_count % 5 == 4){
-					branch = substr;
-					//std::cout << "BRANCH: " << branch << std::endl;
-				}
-				part_count++;
-			}
-			userList.push_back(new Manager(type, name, pass, email, phone_number, branch));
-		}
+	// 		//USER INFO: NAME, PASSWORD, EMAIL, PHONE_NUMBER, ACCOUNTS
+	// 		while (str_line.good()){
+	// 			std::string substr;
+	// 			getline(str_line, substr, ',');
+	// 			if (part_count % 5 == 0){
+	// 				name = substr;
+	// 			}
+	// 			else if (part_count % 5 == 1){
+	// 				pass = substr;
+	// 			}
+	// 			else if (part_count % 5 == 2){
+	// 				email = substr;
+	// 			}
+	// 			else if (part_count % 5 == 3){
+	// 				phone_number = substr;
+	// 			}
+	// 			else if (part_count % 5 == 4){
+	// 				branch = substr;
+	// 				//std::cout << "BRANCH: " << branch << std::endl;
+	// 			}
+	// 			part_count++;
+	// 		}
+	// 		userList.push_back(new Manager(type, name, pass, email, phone_number, branch));
+	// 	}
+	// }
+	
+	//file.open("record.txt", std::ios::in);
+	if (!file.is_open()){
+		throw "record.txt could not be opened";
 	}
 	
-	//std::cout<<"PRINT"<< userList.size() << std::endl;
+	std::string type_str, attribute_str;
+	while(file >> type_str){
+		std::cout<<"TYPE_STR: "<< type_str << std::endl;
+		getline(file, attribute_str);
+		std::cout<<"ATTRIBUTE_STR: "<< attribute_str << std::endl;
+		User* user = Utils::parseUserFromString(type_str, attribute_str);
+		userList.push_back(user);
+	}
+	std::cout<<"USERLIST_SIZE: "<< userList.size() << std::endl;
+
+
 	for (int i=0; i < signed(userList.size()); i++){
 		std::string name = userList[i]->getName();
+		std::cout<<"NAME: "<< userList[i]->getName() << std::endl;
 		userRecord.insert(std::pair<std::string, User*>(name, userList[i]));
 	}
+
+	file.close();
 
 	// loop for login user
 	bool invalid_login = true;
@@ -185,7 +203,7 @@ int main()
 		else{
 			std::cout << "Sorry, incorrect username or password! Please try again" << std::endl;
 		}
-			
+	}		
 									// //Create a user
 									// if (input == 2) {
 									// 	std::cout<<"What username would you like? " <<std::endl;
@@ -222,12 +240,13 @@ int main()
 									// 		std::cout<<"Password did not match, please try again"<<std::endl;
 									// 	}
 									// }
-	}
-	if (userRecord[username]->getType() == "C"){
+	
+
+	if (userRecord[username]->getType() == CUSTOMER){
 		while (active) {
 			Display::customerMenu(userRecord[username]->getName());
 			std::cin >> input;
-			system("clear");
+			//system("clear");
 			Customer* customer = static_cast<Customer*>(userRecord[username]);
 			switch(input) {
 			case 1:
@@ -267,26 +286,48 @@ int main()
 			}
 		}
 	}
-	else if (userRecord[username]->getType() == "M"){
-		Display::managerMenu(userRecord[username]->getName());
-		std::cin >> input;
-		system("clear");
-		switch(input) {
-			case 1:
-				std::cout << "CREATE USER (placeholder)" << std::endl;
-				break;
-			case 2:
-				std::cout << "DELETE USER (placeholder)" << std::endl;
-				break;
-			default:
-				std::cout << "Invalid input, try again" << std::endl;
-				std::cin.clear();
-				std::cin.ignore();
+	else if (userRecord[username]->getType() == MANAGER){
+		while(active){
+			Display::managerMenu(userRecord[username]->getName());
+			std::cin >> input;
+			//system("clear");
+			switch(input) {
+				case 1:
+					std::cout << "CREATE USER (placeholder)" << std::endl;
+					break;
+				case 2:
+					std::cout << "DELETE USER (placeholder)" << std::endl;
+					break;
+				case 3:
+					std::cout << "Thank you, have a nice day!" << std::endl;
+					active = false;
+					break;
+				default:
+					std::cout << "Invalid input, try again" << std::endl;
+					std::cin.clear();
+					std::cin.ignore();
+			}
 		}
 	}
 
+
+	//file.close();
+	std::fstream myFile;
 	
-
-	file.close();
-
+	myFile.open("data/record.txt", std::ios::out);
+	for (std::map<std::string, User*>::iterator it = userRecord.begin(); it != userRecord.end(); ++it){
+    	if (it->second->getType() == CUSTOMER){
+			Customer* customer = static_cast<Customer*>(it->second);
+			myFile << "C " << customer->getName() << " " << customer->getPass() << " " << customer->getEmail() << " " << customer->getPhoneNumber() << " ";
+			for (std::map<std::string, float>::iterator it2 = customer->getOnlyAccount().begin(); it2 != customer->getOnlyAccount().end(); ++it2){
+        		myFile << it2->first << " " << std::to_string(it2->second) << " ";
+    		}
+			myFile << std::endl;
+		}
+		else if (it->second->getType() == MANAGER){
+			Manager* manager = static_cast<Manager*>(it->second);
+			myFile << "M " << manager->getName() << " " << manager->getPass() << " " << manager->getEmail() << " " << manager->getPhoneNumber() << " " << manager->getBranch() << std::endl;
+		}
+    }
+	myFile.close();
 }
