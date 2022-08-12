@@ -315,12 +315,12 @@ int main()
 	std::fstream myFile;
 	
 	myFile.open("data/record.txt", std::ios::out);
-	for (std::map<std::string, User*>::iterator it = userRecord.begin(); it != userRecord.end(); ++it){
+	for (std::map<std::string, User*>::iterator it = userRecord.begin(); it != userRecord.end(); it++){
     	if (it->second->getType() == CUSTOMER){
 			Customer* customer = static_cast<Customer*>(it->second);
-			myFile << "C " << customer->getName() << " " << customer->getPass() << " " << customer->getEmail() << " " << customer->getPhoneNumber() << " ";
+			myFile << "C " << customer->getName() << " " << customer->getPass() << " " << customer->getEmail() << " " << customer->getPhoneNumber();
 			for (std::map<std::string, float>::iterator it2 = customer->getOnlyAccount().begin(); it2 != customer->getOnlyAccount().end(); ++it2){
-        		myFile << it2->first << " " << std::to_string(it2->second) << " ";
+        		myFile << " " << it2->first << " " << std::to_string(it2->second);
     		}
 			myFile << std::endl;
 		}
@@ -330,4 +330,9 @@ int main()
 		}
     }
 	myFile.close();
+
+	std::cout << "END" <<std::endl;
+	for (int i = 0; i < userList.size(); ++i){
+		delete userList[i];
+	}
 }
